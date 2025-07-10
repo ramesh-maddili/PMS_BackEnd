@@ -25,9 +25,9 @@ const seedProducts = async () => {
     ];
 
     await Product.insertMany(products);
-    console.log("✅ Products seeded successfully");
+    console.log(" Products seeded successfully");
   } catch (err) {
-    console.error("❌ Error seeding products:", err.message);
+    console.error(" Error seeding products:", err.message);
   } finally {
     await mongoose.disconnect();
   }

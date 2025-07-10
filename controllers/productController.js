@@ -1,3 +1,4 @@
+//test3
 const Product = require('../models/Product');
 
 exports.getAll = async (request, h) => {

@@ -21,9 +21,9 @@ const seedUsers = async () => {
     //await User.deleteMany(); // Optional cleanup
     await User.insertMany(users);
 
-    console.log('✅ Users seeded with hashed passwords');
+    console.log('Users seeded with hashed passwords');
   } catch (err) {
-    console.error('❌ Error seeding users:', err.message);
+    console.error('Error seeding users:', err.message);
   } finally {
     mongoose.disconnect();
   }
