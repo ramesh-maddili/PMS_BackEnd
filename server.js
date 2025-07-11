@@ -1,4 +1,3 @@
-// server.js
 const Hapi = require('@hapi/hapi');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
@@ -6,7 +5,6 @@ const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 
 dotenv.config();
-
 const init = async () => {
   const server = Hapi.server({
     port: 5000,

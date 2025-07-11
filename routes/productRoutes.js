@@ -6,7 +6,7 @@ exports.plugin = {
   register: (server) => {
     server.route([
       { method: 'GET', path: '/products/getall', handler: productController.getAll, options: { pre: [verifyToken()] } },
-      { method: 'GET', path: '/products/{id}', handler:productController.get, options: {pre:[verifyToken('Admin')]}},
+      { method: 'GET', path: '/products/get/{id}', handler: productController.get, options: { pre: [verifyToken('Admin')] } },
       { method: 'POST', path: '/products/create', handler: productController.create, options: { pre: [verifyToken('Admin')] } },
       { method: 'PUT', path: '/products/{id}', handler: productController.update, options: { pre: [verifyToken('Admin')] } },
       { method: 'DELETE', path: '/products/{id}', handler: productController.delete, options: { pre: [verifyToken('Admin')] } },

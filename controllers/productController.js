@@ -5,9 +5,19 @@ exports.getAll = async (request, h) => {
   const products = await Product.find();
   return products;
 };
-exports.get = async(request,h)=>{
-const singleProduct = await Product.findById();
-return singleProduct;
+exports.get = async (request, h) => {
+  const id = request.params.id;
+
+  try {
+    const singleProduct = await Product.findById(id);
+    if (!singleProduct) {
+      return h.response({ message: 'Product not found' }).code(404);
+    }
+    return h.response(singleProduct).code(200);
+  } catch (error) {
+    console.error('Error fetching product:', error.message);
+    return h.response({ message: 'Server error' }).code(500);
+  }
 };
 
 exports.create = async (request, h) => {
