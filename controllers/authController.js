@@ -10,13 +10,13 @@ exports.login = async (request, h) => {
   const user = await User.findOne({ username });
 
   if (!user) {
-    console.log('❌ User not found:', username);
+    console.log('User not found:', username);
     return h.response({ message: 'Invalid credentials' }).code(401);
   }
 
   const match = await bcrypt.compare(password, user.password);
   if (!match) {
-    console.log('❌ Password does not match for user:', username);
+    console.log('Password does not match for user:', username);
     return h.response({ message: 'Invalid credentials' }).code(401);
   }
 

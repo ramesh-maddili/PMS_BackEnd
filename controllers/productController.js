@@ -5,6 +5,10 @@ exports.getAll = async (request, h) => {
   const products = await Product.find();
   return products;
 };
+exports.get = async(request,h)=>{
+const singleProduct = await Product.findById();
+return singleProduct;
+};
 
 exports.create = async (request, h) => {
   const product = new Product(request.payload);

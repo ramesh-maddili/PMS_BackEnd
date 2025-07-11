@@ -1,7 +1,0 @@
-1.Password hashed:bcript.hash
-2.Envinonment Variable: using .env
-3.Error handling: try/catch
-4.DB Connection cleanup: mongoose.disconuct()
-5.Mixed Role: 1 Admin and many Users inserted in DB
-6.Used middleware: JWT
-7.
