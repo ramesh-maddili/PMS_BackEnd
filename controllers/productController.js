@@ -1,4 +1,4 @@
-//test3
+
 const Product = require('../models/Product');
 
 exports.getAll = async (request, h) => {
@@ -23,6 +23,8 @@ exports.get = async (request, h) => {
 exports.create = async (request, h) => {
   const product = new Product(request.payload);
   await product.save();
+  console.log("Product Added" )
+  //return h.response({message:"Product Saved"}).code(201)
   return product;
 };
 
