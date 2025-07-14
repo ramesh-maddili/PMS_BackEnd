@@ -10,10 +10,10 @@ const generateTokens = (user) => {
     role: user.role
   };
 
-  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '45min' });
 
   const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: '7d'
+    expiresIn: '5d'
   });
 
   return { token, refreshToken };
