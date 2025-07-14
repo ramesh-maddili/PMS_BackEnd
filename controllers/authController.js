@@ -2,6 +2,25 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt'); // 
 const jwt = require('jsonwebtoken');
 
+exports.register = async (request, h) => {
+  const { username, email, password, role } = request.payload;
+
+  try {
+    // Check for existing user
+    const existing = await User.findOne({ $or: [{ email }, { username }] });
+    if (existing) {
+      return h.response({ message: 'User already exists' }).code(400);
+    }
+
+    const newUser = new User({ username, email, password, role });
+    await newUser.save();
+
+    return h.response({ message: 'User registered successfully' }).code(201);
+  } catch (err) {
+    console.error('Registration error:', err.message);
+    return h.response({ message: 'Registration failed' }).code(500);
+  }
+};
 // Helper to generate access & refresh tokens
 const generateTokens = (user) => {
   const payload = {
@@ -21,18 +40,18 @@ const generateTokens = (user) => {
 
 exports.login = async (request, h) => {
   try {
-    const { username, email, password } = request.payload;
+    const { email, password } = request.payload;
 
     // Validate user existence
-    const user = await User.findOne({ username, email });
+    const user = await User.findOne({email });
     if (!user) {
-      return h.response({ message: 'Invalid credentials' }).code(401);
+      return h.response({ message: 'Invalid Email' }).code(401);
     }
 
     // Password check
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return h.response({ message: 'Invalid credentials' }).code(401);
+      return h.response({ message: 'Invalid Password' }).code(401);
     }
 
     // Generate access and refresh tokens

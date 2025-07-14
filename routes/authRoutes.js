@@ -7,6 +7,12 @@ exports.plugin = {
     server.route([
       {
         method: 'POST',
+        path: '/register',
+        options: { auth: false },
+        handler: authController.register
+      },
+      {
+        method: 'POST',
         path: '/refresh-token',
         options: { auth: false }, // no JWT required
         handler: authController.refreshToken
