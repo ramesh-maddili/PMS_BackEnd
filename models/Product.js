@@ -3,19 +3,18 @@ const mongoose = require('mongoose');
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,     //  must be inside an object
+    required: true,    
     trim: true,
     unique: true
   },
   price: {
     type: Number,
-    required: true,     //  must be inside an object
+    required: true,     
     min: 0
   },
   category: {
     type: String,
-    required: true,     //  must be inside an object
-    enum: ['Electronics', 'Clothing', 'Laptop', 'Accessories', 'Footwear']
+    required: true,    
   },
   inStock: {
     type: Boolean,
