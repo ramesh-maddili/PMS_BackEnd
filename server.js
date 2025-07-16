@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const Jwt = require('@hapi/jwt'); // modern JWT plugin
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 
 dotenv.config();
 
@@ -43,6 +44,7 @@ const init = async () => {
 
   // Register your routes
   await server.register([authRoutes, productRoutes]);
+  server.route(categoryRoutes);
 
   await mongoose.connect(process.env.MONGO_URI);
   console.log('MongoDB connected');

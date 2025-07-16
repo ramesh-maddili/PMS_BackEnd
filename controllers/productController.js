@@ -1,10 +1,58 @@
 
 const Product = require('../models/Product');
 
-exports.getAll = async (request, h) => {
-  const products = await Product.find();
-  return products;
+// exports.getAll = async (req, h) => {
+//   try {
+//     const page = parseInt(req.query.page) || 1;
+//     const limit = 6;
+//     const skip = (page - 1) * limit;
+
+//     const totalProducts = await Product.countDocuments();
+//     const products = await Product.find().skip(skip).limit(limit);
+//     const totalPages = Math.ceil(totalProducts / limit);
+//     const categoryName = await Product.find().populate('category');
+
+//     return {
+//       data: products,
+//       totalPages,
+//       currentPage: page,
+//       categoryName
+//     };
+//   } catch (err) {
+//     console.error("Error in getAll:", err.message);
+//     return h.response({ message: "Internal Server Error" }).code(500);
+//   }
+// };
+// routes/productRoutes.js or controller
+
+const getAll = async (req, h) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 6;
+    const search = req.query.search || '';
+
+    const filter = search
+      ? { name: { $regex: search, $options: 'i' } }
+      : {};
+
+    const total = await Product.countDocuments(filter);
+    const products = await Product.find(filter)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+
+    return h.response({
+      data: products,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit),
+      total
+    });
+  } catch (err) {
+    console.error("Product fetch error:", err.message);
+    return h.response({ message: "Server error" }).code(500);
+  }
 };
+exports.getAll = getAll;
 exports.get = async (request, h) => {
   const id = request.params.id;
 
