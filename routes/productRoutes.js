@@ -1,4 +1,4 @@
-const productController = require('../controllers/productController');
+const productController = require('../controllers/ProductController');
 const verifyToken = require('../middleware/verifyToken');
 
 exports.plugin = {

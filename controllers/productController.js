@@ -1,30 +1,6 @@
 
 const Product = require('../models/Product');
 
-// exports.getAll = async (req, h) => {
-//   try {
-//     const page = parseInt(req.query.page) || 1;
-//     const limit = 6;
-//     const skip = (page - 1) * limit;
-
-//     const totalProducts = await Product.countDocuments();
-//     const products = await Product.find().skip(skip).limit(limit);
-//     const totalPages = Math.ceil(totalProducts / limit);
-//     const categoryName = await Product.find().populate('category');
-
-//     return {
-//       data: products,
-//       totalPages,
-//       currentPage: page,
-//       categoryName
-//     };
-//   } catch (err) {
-//     console.error("Error in getAll:", err.message);
-//     return h.response({ message: "Internal Server Error" }).code(500);
-//   }
-// };
-// routes/productRoutes.js or controller
-
 const getAll = async (req, h) => {
   try {
     const page = parseInt(req.query.page) || 1;

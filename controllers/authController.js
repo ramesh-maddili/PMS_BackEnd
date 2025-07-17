@@ -29,23 +29,23 @@ const generateTokens = (user) => {
     role: user.role
   };
 
-  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '45min' });
+  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '10min' });
 
   const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: '5d'
   });
 
-  return { token, refreshToken };
+  return { token, refreshToken }; 
 };
 
 exports.login = async (request, h) => {
   try {
-    const { email, password } = request.payload;
+    const { identifier, password } = request.payload;
 
     // Validate user existence
-    const user = await User.findOne({email });
+    const user = await User.findOne({$or: [{ email: identifier }, { username: identifier }] });
     if (!user) {
-      return h.response({ message: 'Invalid Email' }).code(401);
+      return h.response({ message: 'Invalid Email/User' }).code(401);
     }
 
     // Password check
@@ -66,8 +66,8 @@ exports.login = async (request, h) => {
     }).code(200);
 
   } catch (error) {
-    console.error('Login error:', error.message);
-    return h.response({ message: 'Internal server error' }).code(500);
+    console.error('Login error:', 'Given credential was wrong');
+    return h.response({ message: 'Given credential was wrong' }).code(500);
   }
 };
 
